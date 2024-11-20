@@ -7,34 +7,24 @@ import (
 
 func main() {
 
+	//checking if the number of argument is only 3
 	if len(os.Args) != 3 {
+		fmt.Println("Error: wrong numbers of arguments.")
 		return
 	}
 
+	//reading sample.txt
 	fileB, err := os.ReadFile(os.Args[1])
 	if err != nil {
 		fmt.Println("Error reading file:", err)
 	}
 
+	//fix the text file
 	ModifiedText := Goreloaded(string(fileB))
 
-	os.WriteFile(os.Args[2], []byte(ModifiedText), 0644)
-
-	testRunes := []rune{'a', '!', '?', '1', ';', ' '}
-	for _, r := range testRunes {
-		if IsPunct(r) {
-			fmt.Printf("'%c' is a punctuation character.\n", r)
-		} else {
-			fmt.Printf("'%c' is not a punctuation character.\n", r)
-		}
-	}
-
-	testRunes = []rune{' ', '\'', '"'}
-	for _, r := range testRunes {
-		if IsPunctQuote(r) {
-			fmt.Printf("'%c' is a punctuation or quotation character.\n", r)
-		} else {
-			fmt.Printf("'%c' is not a punctuation or quotation character.\n", r)
-		}
+	//Writing the modified text to result.txt
+	err = os.WriteFile(os.Args[2], []byte(ModifiedText), 0644)
+	if err != nil {
+		fmt.Println(err)
 	}
 }
